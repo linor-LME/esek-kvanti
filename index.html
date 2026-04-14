@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>כתב התחייבות והרשמה – עסק קוונטי מחזור 3</title>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700&family=Heebo:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8D5A3;
+    --gold-dark: #8B6914;
+    --bg: #FAF8F4;
+    --bg-card: #FFFFFF;
+    --text: #1A1612;
+    --text-muted: #6B5E4E;
+    --border: #E2D9CE;
+    --purple: #4A3F6B;
+    --purple-light: #F0EDF7;
+  }
+
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  .page-header {
+    background: var(--purple);
+    padding: 2.5rem 1.5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.18) 0%, transparent 70%);
+  }
+  .header-ornament {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    position: relative;
+  }
+  .page-header h1 {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: clamp(22px, 5vw, 32px);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.3;
+    position: relative;
+  }
+  .page-header h1 span {
+    color: var(--gold);
+  }
+  .header-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+    margin-top: 0.5rem;
+    position: relative;
+  }
+  .gold-line {
+    width: 48px;
+    height: 2px;
+    background: var(--gold);
+    margin: 1rem auto 0;
+    position: relative;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--gold-dark);
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .field-grid.triple { grid-template-columns: 1fr 1fr 1fr; }
+  .field-full { grid-column: 1 / -1; }
+
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+  input[type="text"], input[type="email"], input[type="tel"], input[type="date"] {
+    font-family: 'Heebo', sans-serif;
+    font-size: 15px;
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 13px;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none;
+  }
+  input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
+  }
+
+  .contract-scroll {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    font-size: 13.5px;
+    line-height: 1.85;
+    color: var(--text);
+    max-height: 320px;
+    overflow-y: auto;
+  }
+  .contract-scroll h3 {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--purple);
+  }
+  .contract-scroll h4 {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--purple);
+    margin: 1rem 0 0.4rem;
+  }
+  .contract-scroll ul {
+    padding-right: 1.25rem;
+    margin: 0.4rem 0;
+  }
+  .contract-scroll li { margin-bottom: 0.35rem; }
+  .contract-scroll .participant-line {
+    background: rgba(201,168,76,0.1);
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+    border-right: 3px solid var(--gold);
+  }
+
+  .sig-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .sig-wrap {
+    border: 1.5px dashed var(--gold);
+    border-radius: 10px;
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+  }
+  canvas {
+    display: block;
+    width: 100%;
+    height: 150px;
+    cursor: crosshair;
+    touch-action: none;
+  }
+  .sig-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    gap: 8px;
+    color: #BEB5A8;
+    font-size: 14px;
+  }
+  .sig-placeholder svg { opacity: 0.5; }
+  .sig-clear {
+    font-family: 'Heebo', sans-serif;
+    font-size: 12px;
+    color: var(--text-muted);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 12px;
+    cursor: pointer;
+    margin-top: 8px;
+  }
+  .sig-clear:hover { background: var(--bg); }
+
+  .error-msg {
+    font-size: 12px;
+    color: #C0392B;
+    margin-top: 4px;
+    display: none;
+  }
+
+  .confirm-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: var(--purple-light);
+    border: 1px solid rgba(74,63,107,0.15);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .confirm-box input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    accent-color: var(--purple);
+    cursor: pointer;
+  }
+  .confirm-box label {
+    font-size: 13.5px;
+    color: var(--text);
+    font-weight: 400;
+    cursor: pointer;
+  }
+
+  .submit-btn {
+    font-family: 'Heebo', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    background: var(--purple);
+    border: none;
+    border-radius: 10px;
+    padding: 14px 28px;
+    width: 100%;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background 0.2s, transform 0.1s;
+    letter-spacing: 0.02em;
+    position: relative;
+  }
+  .submit-btn:hover { background: #3a3057; }
+  .submit-btn:active { transform: scale(0.98); }
+  .submit-btn:disabled { background: #aaa; cursor: not-allowed; }
+  .submit-btn .spinner {
+    display: none;
+    width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    margin: 0 auto;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .success-card {
+    display: none;
+    background: #fff;
+    border: 1px solid #C8E6C9;
+    border-radius: 12px;
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+  }
+  .success-icon {
+    width: 56px; height: 56px;
+    background: #E8F5E9;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 26px;
+  }
+  .success-card h2 {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 22px;
+    color: #2E7D32;
+    margin-bottom: 0.5rem;
+  }
+  .success-card p { font-size: 14px; color: var(--text-muted); margin-bottom: 1.25rem; }
+  .btn-pdf {
+    font-family: 'Heebo', sans-serif;
+    font-size: 14px;
+    color: var(--purple);
+    background: var(--purple-light);
+    border: 1px solid rgba(74,63,107,0.2);
+    border-radius: 8px;
+    padding: 10px 22px;
+    cursor: pointer;
+  }
+
+  .footer-note {
+    text-align: center;
+    font-size: 12px;
+    color: #BEB5A8;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 500px) {
+    .field-grid { grid-template-columns: 1fr; }
+    .field-grid.triple { grid-template-columns: 1fr 1fr; }
+    .card { padding: 1.25rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="header-ornament">✦ לינור מוריאל אלפסי ✦</div>
+  <h1>כתב התחייבות והרשמה<br><span>עסק קוונטי – מחזור 3</span></h1>
+  <p class="header-sub">נא למלא את הפרטים, לקרוא את ההסכם ולחתום</p>
+  <div class="gold-line"></div>
+</div>
+
+<div class="container">
+
+  <div id="mainForm">
+
+    <!-- פרטים אישיים -->
+    <div class="card">
+      <div class="section-label">פרטי המשתתפת</div>
+      <div class="field-grid">
+        <div class="field">
+          <label for="fullname">שם מלא *</label>
+          <input type="text" id="fullname" name="שם_מלא" placeholder="שם פרטי ושם משפחה" autocomplete="name" />
+          <span class="error-msg" id="err-name">נא למלא שם מלא</span>
+        </div>
+        <div class="field">
+          <label for="idnum">תעודת זהות *</label>
+          <input type="text" id="idnum" name="תעודת_זהות" placeholder="9 ספרות" inputmode="numeric" maxlength="9" />
+          <span class="error-msg" id="err-id">נא למלא ת.ז. תקינה</span>
+        </div>
+        <div class="field">
+          <label for="phone">טלפון נייד</label>
+          <input type="tel" id="phone" name="טלפון" placeholder="050-0000000" inputmode="tel" />
+        </div>
+        <div class="field">
+          <label for="email">אימייל</label>
+          <input type="email" id="email" name="אימייל" placeholder="your@email.com" inputmode="email" />
+        </div>
+        <div class="field">
+          <label for="signdate">תאריך</label>
+          <input type="date" id="signdate" name="תאריך" />
+        </div>
+      </div>
+    </div>
+
+    <!-- תוכן ההסכם -->
+    <div class="card">
+      <div class="section-label">כתב ההתחייבות</div>
+      <div class="contract-scroll">
+        <div class="participant-line">אני המשתתפת שמחה להודיע על רצוני להצטרף למחזור השלישי של תוכנית "עסק קוונטי", במסגרת ההטבה המוצעת לבוגרות המחזורים הקודמים.</div>
+
+        <h4>1. פרטי התוכנית ולוח זמנים</h4>
+        <ul>
+          <li><strong>מועד פתיחה:</strong> ה-1 במאי 2026</li>
+          <li><strong>ימי ושעות פעילות:</strong> ימי שישי, 09:00–11:00</li>
+          <li><strong>מתכונת:</strong> מפגשי זום בשידור חי</li>
+          <li><strong>הטבת בוגרת:</strong> השתתפות ללא עלות כבוגרת התוכנית</li>
+          <li><strong>ליווי:</strong> מסלול זה אינו כולל ליווי של מנטורית אישית</li>
+        </ul>
+
+        <h4>2. הצהרה והתחייבות המשתתפת</h4>
+        <ul>
+          <li><strong>נוכחות:</strong> מתחייבת להשתתף בשידור חי ב-70% לפחות ממפגשי הקורס</li>
+          <li><strong>מצלמות:</strong> מתחייבת להיות נוכחת עם מצלמה פתוחה</li>
+          <li><strong>ביצוע משימות:</strong> מתחייבת להשלים לפחות 50% מכלל המשימות</li>
+          <li><strong>קניין רוחני:</strong> כל התכנים, ההקלטות והחומרים הם רכושה הבלעדי של לינור מוריאל אלפסי. מתחייבת שלא להעביר, לשכפל או להפיץ אותם</li>
+          <li><strong>סודיות:</strong> מתחייבת לשמור על סודיות בנוגע למידע שיעלה ממשתתפות אחרות. ידוע לי כי המפגשים מוקלטים ואני נותנת הסכמתי</li>
+        </ul>
+
+        <h4>3. בונוס התמדה ומצוינות</h4>
+        <p>משתתפת שתעמוד ב-100% נוכחות (10 מפגשים) ותבצע את כל המשימות – תהיה זכאית לשיחת ייעוץ אישית של 20 דקות עם לינור מוריאל אלפסי.</p>
+
+        <h4>4. הפסקת השתתפות</h4>
+        <p>במידה ולא אעמוד בהתחייבויות – לינור מוריאל אלפסי רשאית להוציא אותי מהתוכנית ולהסיר גישה לכל התכנים.</p>
+      </div>
+    </div>
+
+    <!-- אישור -->
+    <div class="card">
+      <div class="section-label">אישור קריאה</div>
+      <div class="confirm-box">
+        <input type="checkbox" id="confirm" />
+        <label for="confirm">קראתי את כתב ההתחייבות במלואו, הבנתי את כל התנאים ואני מסכימה להם</label>
+      </div>
+      <span class="error-msg" id="err-confirm">נא לאשר קריאת ההסכם</span>
+    </div>
+
+    <!-- חתימה -->
+    <div class="card">
+      <div class="section-label">חתימה דיגיטלית</div>
+      <p class="sig-label">חתמי כאן עם האצבע (טלפון) או עם העכבר (מחשב) *</p>
+      <div class="sig-wrap">
+        <canvas id="sigCanvas"></canvas>
+        <div class="sig-placeholder" id="sigHint">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5"><path d="M17 3a2.828 2.828 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+          חתמי כאן
+        </div>
+      </div>
+      <span class="error-msg" id="err-sig">נא לחתום לפני השליחה</span>
+      <button class="sig-clear" onclick="clearSig()">✕ נקה חתימה</button>
+    </div>
+
+    <button class="submit-btn" id="submitBtn" onclick="submitForm()">
+      <span id="btnText">אישור וחתימה על כתב ההתחייבות ✦</span>
+      <div class="spinner" id="spinner"></div>
+    </button>
+
+  </div>
+
+  <!-- הצלחה -->
+  <div class="success-card" id="successBox">
+    <div class="success-icon">✓</div>
+    <h2>ההסכם נחתם בהצלחה!</h2>
+    <p id="successMsg"></p>
+    <p style="font-size:13px;color:#999;margin-bottom:1.5rem;">אישור נשלח ללינור. ניתן לשמור עותק אישי:</p>
+    <button class="btn-pdf" onclick="downloadPDF()">הורד עותק PDF אישי</button>
+  </div>
+
+  <div class="footer-note">עסק קוונטי – לינור מוריאל אלפסי © 2026</div>
+</div>
+
+<script>
+const canvas = document.getElementById('sigCanvas');
+const ctx = canvas.getContext('2d');
+let drawing = false, hasSig = false;
+
+function resizeCanvas() {
+  const dpr = window.devicePixelRatio || 1;
+  const w = canvas.offsetWidth;
+  const h = 150;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  canvas.style.height = h + 'px';
+  ctx.scale(dpr, dpr);
+  ctx.strokeStyle = '#3a3057';
+  ctx.lineWidth = 2.5;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+}
+resizeCanvas();
+window.addEventListener('resize', () => { const d = hasSig; resizeCanvas(); if(d) hasSig = true; });
+
+function getPos(e) {
+  const r = canvas.getBoundingClientRect();
+  const scaleX = canvas.offsetWidth / r.width;
+  if (e.touches) return { x:(e.touches[0].clientX-r.left)*scaleX, y:(e.touches[0].clientY-r.top)*scaleX };
+  return { x:(e.clientX-r.left)*scaleX, y:(e.clientY-r.top)*scaleX };
+}
+canvas.addEventListener('mousedown', e=>{ drawing=true; const p=getPos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); });
+canvas.addEventListener('mousemove', e=>{ if(!drawing) return; const p=getPos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); markSig(); });
+canvas.addEventListener('mouseup', ()=>drawing=false);
+canvas.addEventListener('mouseleave', ()=>drawing=false);
+canvas.addEventListener('touchstart', e=>{ e.preventDefault(); drawing=true; const p=getPos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); },{passive:false});
+canvas.addEventListener('touchmove', e=>{ e.preventDefault(); if(!drawing) return; const p=getPos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); markSig(); },{passive:false});
+canvas.addEventListener('touchend', ()=>drawing=false);
+
+function markSig() { hasSig=true; document.getElementById('sigHint').style.display='none'; }
+function clearSig() { ctx.clearRect(0,0,canvas.width,canvas.height); hasSig=false; document.getElementById('sigHint').style.display='flex'; }
+
+const today = new Date();
+document.getElementById('signdate').value = today.toISOString().split('T')[0];
+
+function showErr(id) { document.getElementById(id).style.display='block'; }
+function hideErr(id) { document.getElementById(id).style.display='none'; }
+
+async function submitForm() {
+  ['err-name','err-id','err-confirm','err-sig'].forEach(hideErr);
+  const name = document.getElementById('fullname').value.trim();
+  const id = document.getElementById('idnum').value.trim();
+  const confirm = document.getElementById('confirm').checked;
+  let valid = true;
+  if (!name) { showErr('err-name'); valid=false; }
+  if (!id || id.length < 5) { showErr('err-id'); valid=false; }
+  if (!confirm) { showErr('err-confirm'); valid=false; }
+  if (!hasSig) { showErr('err-sig'); valid=false; }
+  if (!valid) return;
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  document.getElementById('btnText').style.display='none';
+  document.getElementById('spinner').style.display='block';
+
+  const sigData = canvas.toDataURL('image/png');
+  const date = document.getElementById('signdate').value;
+  const phone = document.getElementById('phone').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const dateStr = date ? new Date(date).toLocaleDateString('he-IL') : today.toLocaleDateString('he-IL');
+
+  try {
+    const res = await fetch('https://formspree.io/f/xzdyzbjj', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        'שם מלא': name,
+        'תעודת זהות': id,
+        'טלפון': phone || '—',
+        'אימייל': email || '—',
+        'תאריך חתימה': dateStr,
+        'חתימה (base64)': sigData,
+        '_subject': `חתימה חדשה על עסק קוונטי מחזור 3 – ${name}`
+      })
+    });
+    if (res.ok) {
+      document.getElementById('mainForm').style.display='none';
+      document.getElementById('successBox').style.display='block';
+      document.getElementById('successMsg').textContent = `${name} | ת.ז. ${id} | ${dateStr}`;
+      window._formData = { name, id, phone, email, dateStr, sigData };
+    } else {
+      throw new Error('שגיאה');
+    }
+  } catch(e) {
+    btn.disabled=false;
+    document.getElementById('btnText').style.display='block';
+    document.getElementById('spinner').style.display='none';
+    alert('אירעה שגיאה בשליחה. נא לנסות שוב.');
+  }
+}
+
+function downloadPDF() {
+  const d = window._formData;
+  if (!d) return;
+  const w = window.open('','_blank');
+  w.document.write(`<!DOCTYPE html><html dir="rtl" lang="he"><head><meta charset="utf-8">
+  <title>כתב התחייבות – עסק קוונטי מחזור 3</title>
+  <style>
+    body{font-family:Arial,sans-serif;max-width:700px;margin:40px auto;padding:24px;font-size:13px;line-height:1.8;direction:rtl;color:#1a1612;}
+    h1{font-size:20px;color:#4A3F6B;margin-bottom:4px;}
+    h2{font-size:15px;color:#4A3F6B;margin:20px 0 6px;}
+    .gold{color:#8B6914;font-size:11px;letter-spacing:0.15em;}
+    table{width:100%;border-collapse:collapse;margin:12px 0;}
+    td{padding:6px 10px;border:1px solid #e2d9ce;font-size:13px;}
+    td:first-child{background:#faf8f4;font-weight:500;width:140px;}
+    ul{padding-right:18px;margin:6px 0;}li{margin-bottom:4px;}
+    .sig-section{margin-top:24px;border-top:2px solid #C9A84C;padding-top:16px;}
+    .sig-img{border:1px solid #ccc;border-radius:6px;max-width:280px;max-height:100px;}
+    .footer{margin-top:32px;font-size:11px;color:#999;text-align:center;border-top:1px solid #eee;padding-top:12px;}
+  </style></head><body>
+  <p class="gold">✦ לינור מוריאל אלפסי ✦</p>
+  <h1>כתב התחייבות והרשמה – עסק קוונטי מחזור 3</h1>
+  <table>
+    <tr><td>שם מלא</td><td>${d.name}</td></tr>
+    <tr><td>תעודת זהות</td><td>${d.id}</td></tr>
+    ${d.phone ? `<tr><td>טלפון</td><td>${d.phone}</td></tr>` : ''}
+    ${d.email ? `<tr><td>אימייל</td><td>${d.email}</td></tr>` : ''}
+    <tr><td>תאריך חתימה</td><td>${d.dateStr}</td></tr>
+  </table>
+  <h2>פרטי התוכנית</h2>
+  <ul>
+    <li>מועד פתיחה: 1 במאי 2026</li>
+    <li>ימי שישי, 09:00–11:00, מפגשי זום בשידור חי</li>
+    <li>הטבת בוגרת: השתתפות ללא עלות</li>
+    <li>מסלול ללא ליווי מנטורית אישית</li>
+  </ul>
+  <h2>התחייבויות המשתתפת</h2>
+  <ul>
+    <li>נוכחות בשידור חי ב-70% לפחות מהמפגשים</li>
+    <li>נוכחות עם מצלמה פתוחה</li>
+    <li>השלמת 50% לפחות מהמשימות</li>
+    <li>שמירה על קניין רוחני וסודיות</li>
+    <li>הסכמה להקלטת המפגשים</li>
+  </ul>
+  <div class="sig-section">
+    <p><strong>חתימה דיגיטלית – ${d.name}</strong></p>
+    <img src="${d.sigData}" class="sig-img" />
+    <p style="margin-top:8px;font-size:12px;color:#666;">תאריך: ${d.dateStr} | ת.ז.: ${d.id}</p>
+  </div>
+  <div class="footer">עסק קוונטי – לינור מוריאל אלפסי © 2026 | מסמך זה הופק אוטומטית בעת החתימה</div>
+  <script>window.onload=()=>window.print();<\/script>
+  </body></html>`);
+  w.document.close();
+}
+</script>
+</body>
+</html>
